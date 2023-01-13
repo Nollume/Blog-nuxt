@@ -1,0 +1,42 @@
+%buttons {
+  text-decoration: none;
+
+  padding-block: 0.6rem;
+  padding-inline: 1.5rem;
+
+  background-color: transparent;
+
+  position: relative;
+}
+
+%hoverPseudoElEffect {
+  content: "";
+  position: absolute;
+
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: all 0.4s ease-in-out;
+
+  background-color: $accent-color;
+}
+
+%title {
+  width: 100%;
+  height: clamp(5rem, 12vw, 14rem);
+
+  margin-bottom: 4.25rem;
+
+  display: flex;
+  align-items: center;
+
+  background-color: $blog-accent-color;
+
+}
+%headlineSecondary {
+  margin: 0;
+  margin-left: 20%;
+  padding-inline: 0.5rem;
+
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  letter-spacing: -0.5px;
+}

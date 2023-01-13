@@ -1,0 +1,16 @@
+@import "./_normalize.scss";
+
+body {
+  font-family: "Urbanist", sans-serif;
+
+  color: $text-color;
+  background-color: $bg-color;
+}
+
+#app{
+  position: relative;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
