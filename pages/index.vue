@@ -5,7 +5,10 @@
     </p>
     <div v-else>
       <section class="wrapper">
-        <ul v-if="!pending">
+        <p v-show="pending" class="loading">
+          Loading...
+        </p>
+        <ul>
           <li v-for="img in images" :key="img.id">
             <ImageContainer
               :small="img.urls.small"
@@ -16,9 +19,6 @@
             <HomePost :id="img.id" />
           </li>
         </ul>
-        <p v-else class="loading">
-          Loading...
-        </p>
       </section>
       <TheBlog />
     </div>

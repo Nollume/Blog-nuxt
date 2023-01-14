@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="lists-wrapper">
-      <BlogList :images="getImagesFirstColumn" :list-class="'first-list'" />
-      <BlogList :images="getImagesSecondColumn" :list-class="'second-list'" />
-      <BlogList :images="getImagesThirdColumn" :list-class="'third-list'" />
-      <p v-if="!length">
+      <BlogList :images="firstColumn" :list-class="'first-list'" />
+      <BlogList :images="secondColumn" :list-class="'second-list'" />
+      <BlogList :images="thirdColumn" :list-class="'third-list'" />
+      <p v-if="!length" class="no-image">
         Could not find the Image.
       </p>
     </div>
@@ -19,22 +19,39 @@ const length = ref<number>(0)
 const divide = ref<number>(0)
 const remainder = ref<number>(0)
 
-const getImagesFirstColumn = ref<ImagesData[]>([])
-const getImagesSecondColumn = ref<ImagesData[]>([])
-const getImagesThirdColumn = ref<ImagesData[]>([])
+const firstColumn = ref<ImagesData[]>([])
+const secondColumn = ref<ImagesData[]>([])
+const thirdColumn = ref<ImagesData[]>([])
 
 const divisionImagesToColumns = () : void => {
-  if (!length.value) { return }
-  getImagesFirstColumn.value = props.searchImages!.slice(0, divide.value)
-  getImagesSecondColumn.value = props.searchImages!.slice(divide.value, divide.value * 2)
-  getImagesThirdColumn.value = props.searchImages!.slice(divide.value * 2, divide.value * 2 + divide.value)
+  if (!length.value) {
+    firstColumn.value.length = 0
+    secondColumn.value.length = 0
+    thirdColumn.value.length = 0
+    return
+  }
+  firstColumn.value = props.searchImages!.slice(0, divide.value)
+  secondColumn.value = props.searchImages!.slice(divide.value, divide.value * 2)
+  thirdColumn.value = props.searchImages!.slice(divide.value * 2, divide.value * 2 + divide.value)
 
   if (remainder.value === 1) {
-    getImagesFirstColumn.value.push(props.searchImages![length.value - 1])
+    firstColumn.value.push(props.searchImages![length.value - 1])
   }
   if (remainder.value === 2) {
-    getImagesFirstColumn.value.push(props.searchImages![length.value - 2])
-    getImagesSecondColumn.value.push(props.searchImages![length.value - 1])
+    firstColumn.value.push(props.searchImages![length.value - 2])
+    secondColumn.value.push(props.searchImages![length.value - 1])
+  }
+  if (window.matchMedia('(max-width: 64rem)').matches) {
+    if (!thirdColumn.value.length) { return }
+    const columnThreeLength : number = thirdColumn.value.length
+    const columnThreeDivide : number = columnThreeLength / 2
+    const columnThreeReminder : number = columnThreeLength % 2
+
+    firstColumn.value = firstColumn.value.concat(thirdColumn.value.slice(0, columnThreeDivide))
+    secondColumn.value = secondColumn.value.concat(thirdColumn.value.slice(columnThreeDivide, columnThreeDivide * 2))
+    if (columnThreeReminder === 1) {
+      secondColumn.value.push(thirdColumn.value[columnThreeLength - 1])
+    }
   }
 }
 
@@ -43,9 +60,11 @@ watchEffect(() => {
   divide.value = Math.floor(length.value / 3)
   remainder.value = length.value % 3
 })
+
 watch(length, () => {
   divisionImagesToColumns()
 })
+
 onMounted(() => {
   divisionImagesToColumns()
 })
@@ -58,6 +77,9 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 2rem;
+}
+.no-image{
+ text-align: center;
 }
 @media (max-width: 113.75rem) {
 

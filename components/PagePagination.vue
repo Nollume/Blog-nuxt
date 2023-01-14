@@ -8,16 +8,15 @@
     >
       <IconsPaginationArrow class="arrow" />
     </button>
-    <nuxt-link
+    <button
       v-for="page in amountOfPage"
       :key="page"
-      :to="`/blog?page=${page}`"
       class="pagination-button"
       :class="{'active': page === paginationPage }"
       @click.prevent="changePage(page)"
     >
       {{ page }}
-    </nuxt-link>
+    </button>
     <button
       class="pagination-button forward"
       :disabled="paginationPage === amountOfPage"
@@ -36,20 +35,33 @@ const emit = defineEmits<{(e: 'sendPageNumber', value : number): void}>()
 const amountOfPage = ref<number>(5)
 const currentPage = ref<number>(1)
 
+const router = useRouter()
+
+const addQuery = (val : number) : void => {
+  router.push({
+    query: {
+      page: val.toString()
+    }
+  })
+}
+
 const changePage = (page : number) : void => {
   currentPage.value = page
   emit('sendPageNumber', currentPage.value)
+  addQuery(currentPage.value)
 }
 const goForward = () : void => {
   if (props.paginationPage !== amountOfPage.value) {
     currentPage.value = props.paginationPage
     emit('sendPageNumber', currentPage.value + 1)
+    addQuery(currentPage.value + 1)
   }
 }
 const goBack = () : void => {
   if (props.paginationPage !== 1) {
     currentPage.value = props.paginationPage
     emit('sendPageNumber', currentPage.value - 1)
+    addQuery(currentPage.value - 1)
   }
 }
 
