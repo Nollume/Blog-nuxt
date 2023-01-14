@@ -23,7 +23,11 @@ export default defineNuxtConfig({
         }
       ]
     },
-    pageTransition: { name: 'pageAnimate', mode: 'out-in' }
+    pageTransition: {
+      name: 'page',
+      mode: 'out-in',
+      css: true
+    }
   },
   runtimeConfig: {
     accessKey: process.env.NUXT_ACCES_KEY,

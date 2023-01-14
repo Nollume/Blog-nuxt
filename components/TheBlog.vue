@@ -7,27 +7,49 @@
       <p v-if="pending" class="loading">
         Loading...
       </p>
-      <div v-else class="lists-wrapper">
-        <BlogList :images="getImagesFirstColumn" :list-class="'first-list'" />
-        <BlogList :images="getImagesSecondColumn" :list-class="'second-list'" />
-        <BlogList :images="getImagesThirdColumn" :list-class="'third-list'" />
+      <div>
+        <SearchInput :set-search="search" @send-search-resut="search = $event" />
+        <div v-if="!searchImages" class="lists-wrapper">
+          <BlogList :images="getImagesFirstColumn" :list-class="'first-list'" />
+          <BlogList :images="getImagesSecondColumn" :list-class="'second-list'" />
+          <BlogList :images="getImagesThirdColumn" :list-class="'third-list'" />
+        </div>
+        <SearchedResult v-else :search-images="searchImages" :search="search" />
       </div>
-      <!-- <div>
-        <button>{{ paginationPage }}</button>
-      </div> -->
+      <PagePagination
+        v-if="!searchImages"
+        :pagination-page="paginationPage"
+        :refresh="refresh"
+        @send-page-number="paginationPage = $event"
+      />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ImagesData } from '@/typeScriptTypes/types'
-
 const quantityOfImages = ref<number>(13)
+//
+// Handle Pagination + Fetch Data
+//
 const paginationPage = ref<number>(1)
 
-const { data: images, error, pending } =
-    useFetch<ImagesData[]>(`/api/images?quantity=${quantityOfImages.value}&paginationPage=${paginationPage.value}`)
+const { data: images, error, pending, refresh } = useLazyAsyncData<ImagesData[]>('images', () =>
+  $fetch(`/api/images?quantity=${quantityOfImages.value}&paginationPage=${paginationPage.value}`))
 
+watch(paginationPage, () => {
+  refresh()
+})
+
+const { query } = useRoute()
+onMounted(() => {
+  if (query.page) {
+    paginationPage.value = +query.page!
+  }
+})
+//
+// fill lists
+//
 const getImagesFirstColumn = computed<ImagesData[]>(() => {
   return images.value!.slice(0, 4).concat(images.value!.slice(9, 11))
 })
@@ -40,9 +62,22 @@ const getImagesThirdColumn = computed<ImagesData[]>(() => {
   return images.value!.slice(9, 13)
 })
 
+//
+// Handle Search
+//
+const search = ref<string>('')
+
+const searchImages = computed<ImagesData[] | undefined>(() => {
+  if (search.value) {
+    return images.value?.filter(img =>
+      img.user.name.toLowerCase().includes(search.value.toLowerCase()))
+  }
+})
+
 </script>
 
 <style scoped lang="scss">
+
 .loading,
 .error {
   padding-block: 2rem;
@@ -60,15 +95,6 @@ const getImagesThirdColumn = computed<ImagesData[]>(() => {
   grid-template-columns: repeat(3, 1fr);
   column-gap: 2rem;
 }
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  display: flex;
-  flex-direction: column;
-}
-
 @media (max-width: 113.75rem) {
   .blog-container {
     width: 65%;
@@ -94,6 +120,7 @@ ul {
   .lists-wrapper {
     column-gap: 1rem;
   }
+
 }
 @media (max-width: 40rem) {
   .lists-wrapper {

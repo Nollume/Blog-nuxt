@@ -1,9 +1,9 @@
 <template>
-  <div class="image-container">
+  <figure class="image-container">
     <img
       class="img"
       :class="{'img-filter': filter }"
-      loading="lazy"
+
       :srcset="`${small} 480w,
                 ${regular} 1024w,`"
       :sizes="`(max-width: 30rem) 30rem,
@@ -12,7 +12,10 @@
       :src="regular"
       :alt="altDesc ? altDesc : 'image desc'"
     >
-  </div>
+    <figcaption v-if="user">
+      {{ user }}
+    </figcaption>
+  </figure>
 </template>
 
 <script setup lang="ts">
@@ -21,11 +24,27 @@ interface imgInfo {
     regular : string
     altDesc: string | null
     filter?: boolean
+    user?: string
 }
 defineProps<imgInfo>()
 </script>
 
-<style>
+<style lang="scss">
+figure{
+  position: relative;
+  margin: 0;
+}
+figcaption{
+  position: absolute;
+  inset:0;
+  top: unset;
+
+  padding-block: 0.15rem ;
+  text-align: center;
+
+  background-color: $text-color;
+  color: $bg-color;
+}
 .img {
   width: 100%;
   height: auto;

@@ -29,7 +29,7 @@
 import { ImagesData } from '@/typeScriptTypes/types'
 
 const quantityOfImages = ref<number>(4)
-const paginationPage = ref<number>(1)
+const paginationPage = ref<number>(20)
 const { data: images, error, pending } =
 useFetch<ImagesData[]>(`/api/images?quantity=${quantityOfImages.value}&=paginationPage=${paginationPage.value}`)
 

@@ -1,7 +1,7 @@
 <template>
   <ul :class="listClass">
     <li v-for="img in images" :key="img.id">
-      <ImageContainer :small="img.urls.small" :regular="img.urls.regular" :alt-desc="img.alt_description" />
+      <ImageContainer :small="img.urls.small" :regular="img.urls.regular" :alt-desc="img.alt_description" :user="img.user.name" />
       <BlogPost :id="img.id" />
     </li>
   </ul>
@@ -16,6 +16,14 @@ defineProps<{
 </script>
 
 <style scoped lang="scss">
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+}
 .first-list {
   li:first-child {
       .image-container {

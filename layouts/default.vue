@@ -8,7 +8,10 @@
       <IconsMenu class="menu-icon" @click="menu = false" />
     </header>
     <slot />
-    <footer>&copy; 2022</footer>
+    <footer>
+      <IconsArrowToTop class="arrow-to-top" @click="goToTop" />
+      <p>&copy; 2022</p>
+    </footer>
   </div>
 </template>
 
@@ -21,13 +24,21 @@ const redirectHome = () : void => {
   router.push('/')
 }
 
+const goToTop = () : void => { window.scrollTo({ top: 0, behavior: 'smooth' }) }
+
 </script>
 
 <style scoped lang="scss">
-.container{
+
+.container {
+  max-width: 120rem;
   min-height: 100vh;
+
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+
+  margin: 0 auto;
 }
 header {
   width: 100%;
@@ -65,12 +76,14 @@ footer {
 
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 
   background-color: $text-color;
   color: $bg-color;
 }
-
+.arrow-to-top{
+  cursor: pointer;
+}
 @media (max-width: 64rem) {
   header {
       padding-block: 0.5rem;

@@ -12,10 +12,9 @@
 </template>
 
 <style scoped lang="scss">
-
-svg {
-  fill: currentColor;
-  width: 1.5rem;
-  aspect-ratio: 1;
-}
+  svg {
+    fill: currentColor;
+    width: 1.5rem;
+    aspect-ratio: 1;
+  }
 </style>
