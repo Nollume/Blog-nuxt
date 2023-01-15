@@ -88,10 +88,10 @@ interface ImagesData {
 
 export default defineEventHandler(async (event) : Promise<ImagesData[] | undefined> => {
   const { apiUrlBase, accessKey } : {apiUrlBase : string, accessKey : string} = useRuntimeConfig()
-  // const query = getQuery(event)
+  const query = getQuery(event)
+  const api = `${apiUrlBase}?client_id=${accessKey}&per_page=${query.quantity}&page=${query.pagination}&order_by=latest`
 
-  // const response : ImagesData[] = await $fetch(`${apiUrlBase}?client_id=${accessKey}&per_page=${query.quantity}&page=${query.pagination}&order_by=latest`)
-  const response : ImagesData[] = await $fetch(`${apiUrlBase}?client_id=${accessKey}&per_page=4&page=1&order_by=latest`)
+  const response : ImagesData[] = await $fetch(api)
 
   return response
 })
