@@ -12,7 +12,8 @@ import type { ImagesData } from '@/typeScriptTypes/types'
 defineProps<{
     images: ImagesData[];
     listClass: string;
-  }>()
+
+}>()
 </script>
 
 <style scoped lang="scss">
@@ -136,6 +137,7 @@ li {
     overflow: hidden;
     display: flex;
 }
+
 @media (max-width: 64rem) {
   .first-list,
   .second-list {

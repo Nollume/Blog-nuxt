@@ -4,16 +4,13 @@
       <BlogList :images="firstColumn" :list-class="'first-list'" />
       <BlogList :images="secondColumn" :list-class="'second-list'" />
       <BlogList :images="thirdColumn" :list-class="'third-list'" />
-      <p v-if="!length" class="no-image">
-        Could not find the Image.
-      </p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ImagesData } from '@/typeScriptTypes/types'
-const props = defineProps<{searchImages: ImagesData[] | undefined, search : string}>()
+const props = defineProps<{searchImages: ImagesData[] | undefined}>()
 
 const length = ref<number>(0)
 const divide = ref<number>(0)
@@ -28,6 +25,10 @@ const divisionImagesToColumns = () : void => {
     firstColumn.value.length = 0
     secondColumn.value.length = 0
     thirdColumn.value.length = 0
+    return
+  }
+  if (length.value === 1) {
+    secondColumn.value = props.searchImages!
     return
   }
   firstColumn.value = props.searchImages!.slice(0, divide.value)
@@ -77,9 +78,6 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 2rem;
-}
-.no-image{
- text-align: center;
 }
 @media (max-width: 113.75rem) {
 

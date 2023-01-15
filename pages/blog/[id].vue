@@ -1,8 +1,11 @@
 <template>
   <section>
-    <p v-if="error" class="error">
+    <div v-if="error" class="error">
       {{ error }}.
-    </p>
+      <button class="error-button" @click="clearError({ redirect: '/' })">
+        Back Home
+      </button>
+    </div>
     <div v-else>
       <div class="title-wrapper">
         <h2>
@@ -67,6 +70,28 @@ section {
   padding-block: 2rem;
   text-align: center;
   font-size: 1.25rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.error-button {
+  @extend %buttons;
+  margin-top: 1.5rem;
+  margin-bottom: 4.25rem;
+  &::after {
+  @extend %hoverPseudoElEffect;
+  opacity: 0.5;
+  inset: 0;
+  z-index: -1;
+  }
+  &:is(:hover, :active) {
+  &::after {
+      transform: scaleX(100%);
+  }
+  }
 }
 .title-wrapper {
   @extend %title;

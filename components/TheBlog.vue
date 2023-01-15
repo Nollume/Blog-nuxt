@@ -10,11 +10,12 @@
       <div>
         <SearchInput :set-search="search" @send-search-resut="search = $event" />
         <div v-if="!searchImages" class="lists-wrapper">
-          <BlogList :images="getImagesFirstColumn" :list-class="'first-list'" />
-          <BlogList :images="getImagesSecondColumn" :list-class="'second-list'" />
-          <BlogList :images="getImagesThirdColumn" :list-class="'third-list'" />
+          <BlogList :images="firstColumn" :list-class="'first-list'" />
+          <BlogList :images="secondColumn" :list-class="'second-list'" />
+          <BlogList :images="thirdColumn" :list-class="'third-list'" />
         </div>
-        <SearchedResult v-else :search-images="searchImages" :search="search" />
+        <!-- <SearchedResult v-else :search-images="searchImages" /> -->
+        <SearchedImages v-else :search-images="searchImages" />
       </div>
       <PagePagination
         v-if="!searchImages"
@@ -34,7 +35,7 @@ const quantityOfImages = ref<number>(13)
 //
 const paginationPage = ref<number>(1)
 
-const { data: images, error, pending, refresh } = useLazyAsyncData<ImagesData[]>('images', () =>
+const { data: images, error, pending, refresh } = useLazyAsyncData<ImagesData[]>('images', () : Promise<ImagesData[]> =>
   $fetch(`/api/images?quantity=${quantityOfImages.value}&paginationPage=${paginationPage.value}`))
 
 watch(paginationPage, () => {
@@ -50,16 +51,22 @@ onMounted(() => {
 //
 // fill lists
 //
-const getImagesFirstColumn = computed<ImagesData[]>(() => {
-  return images.value!.slice(0, 4).concat(images.value!.slice(9, 11))
+const firstColumn = computed<ImagesData[]>(() => {
+  if (images.value) {
+    return images.value!.slice(0, 4).concat(images.value!.slice(9, 11))
+  } else { return [] }
 })
 
-const getImagesSecondColumn = computed<ImagesData[]>(() => {
-  return images.value!.slice(4, 9).concat(images.value!.slice(11, 13))
+const secondColumn = computed<ImagesData[]>(() => {
+  if (images.value) {
+    return images.value!.slice(4, 9).concat(images.value!.slice(11, 13))
+  } else { return [] }
 })
 
-const getImagesThirdColumn = computed<ImagesData[]>(() => {
-  return images.value!.slice(9, 13)
+const thirdColumn = computed<ImagesData[]>(() => {
+  if (images.value) {
+    return images.value!.slice(9, 13)
+  } else { return [] }
 })
 
 //
