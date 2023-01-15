@@ -20,6 +20,8 @@ Tieto optimalizácie ešte velmi neovládam kedy je čo výhodnejšie a tak. Aj 
 Spravil som stránkovanie kde sa aktuálna stránka uloží do query aby aj po refreshi stránky zostala na tej istej stránke. Dorobil som aj vyhladávanie akurát pri vyhladávaní tam ostal SearchedResult.vue component nie je nikde použitý som ho tam nechal že ako som sa to snažil spraviť najskôr, chcel som aby zostal ten pôvodný grid a v nom by sa filtrovali obrázky je tam ukázaná taká pokročilejšia logika (aj ked neviem či by to bolo správne) no hádzalo mi to tam občas nejakú chybu (ohladom :key attributu) a nemal som už čas prísť na to že prečo.
 Takže som vytvoril SearchedImages.vue component namiesto toho tam to funguje správne akurát tam ten grid nevyzerá ako na pôvodnej stránke.
 
+Trochu som sa natrápil nad deploymentom, nakoniec som zistil že v jednom env. variable som mal úvodzovku na viac, zaujímavé že pri developmente to išlo :)
+
 ---
 ---
 
