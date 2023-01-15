@@ -36,7 +36,7 @@ const quantityOfImages = ref<number>(13)
 const paginationPage = ref<number>(1)
 
 const { data: images, error, pending, refresh } = useLazyAsyncData<ImagesData[]>('images', () : Promise<ImagesData[]> =>
-  $fetch(`/api/images?quantity=${quantityOfImages.value}&paginationPage=${paginationPage.value}`))
+  $fetch(`/api/images?quantity=${quantityOfImages.value.toString()}&pagination=${paginationPage.value.toString()}`))
 
 watch(paginationPage, () => {
   refresh()
