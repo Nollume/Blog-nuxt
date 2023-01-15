@@ -28,9 +28,6 @@ export default defineNuxtConfig({
       mode: 'out-in'
     }
   },
-  nitro: {
-    preset: "vercel-edge",
-  },
   runtimeConfig: {
     accessKey: process.env.NUXT_ACCES_KEY,
     apiUrlBase: process.env.NUXT_API_URL
