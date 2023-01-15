@@ -13,7 +13,7 @@ Prerobil som všetko iba niečo ostalo BlogList.vue componente pretože tam som 
 * #### Organizacia CSS
 Snažil som sa CSS spraviť čitatelnejšie.
 * #### include pisma
-Netuším aká je správna možnosť includnutia písma, dal som ho tam cez nuxt.config.
+Netuším aká je správna možnosť includnutia písma, dal som ho tam cez nuxt.config. Alebo som mal stiahnuť font a načítať ho lokálne? 
 * #### Optimalizacia Core web vitals - napr. responzivne obrazky, jeden obrazok pre vsetky rozlisenia
 Tieto optimalizácie ešte velmi neovládam kedy je čo výhodnejšie a tak. Aj kvôli tomu sa snažím si nájsť prácu aby som sa naučil lepšie performance. Použil som resolution switching na tie obrázky.
 * #### Chyba pokrocilejsia logika - napr. si mohol riesit strankovanie, dynamicky nacitavat obsah a podobne, vyhladavanie…
