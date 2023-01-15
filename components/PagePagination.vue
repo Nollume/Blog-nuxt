@@ -13,7 +13,7 @@
       :key="page"
       class="pagination-button"
       :class="{'active': page === paginationPage }"
-      @click.prevent="changePage(page)"
+      @click.prevent="changePage($event, page)"
     >
       {{ page }}
     </button>
@@ -44,24 +44,35 @@ const addQuery = (val : number) : void => {
     }
   })
 }
+const { goToTop } = useToTop()
 
-const changePage = (page : number) : void => {
+const scrollOnTopContainer = (e : MouseEvent) => {
+  const target = e.target as HTMLElement
+  const container = target.closest('section')
+
+  goToTop(container!.offsetTop)
+}
+
+const changePage = (e : MouseEvent, page : number) : void => {
   currentPage.value = page
   emit('sendPageNumber', currentPage.value)
   addQuery(currentPage.value)
+  scrollOnTopContainer(e)
 }
-const goForward = () : void => {
+const goForward = (e : MouseEvent) : void => {
   if (props.paginationPage !== amountOfPage.value) {
     currentPage.value = props.paginationPage
     emit('sendPageNumber', currentPage.value + 1)
     addQuery(currentPage.value + 1)
+    scrollOnTopContainer(e)
   }
 }
-const goBack = () : void => {
+const goBack = (e : MouseEvent) : void => {
   if (props.paginationPage !== 1) {
     currentPage.value = props.paginationPage
     emit('sendPageNumber', currentPage.value - 1)
     addQuery(currentPage.value - 1)
+    scrollOnTopContainer(e)
   }
 }
 

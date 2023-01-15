@@ -82,14 +82,14 @@ section {
   margin-top: 1.5rem;
   margin-bottom: 4.25rem;
   &::after {
-  @extend %hoverPseudoElEffect;
-  opacity: 0.5;
-  inset: 0;
-  z-index: -1;
+    @extend %hoverPseudoElEffect;
+    opacity: 0.5;
+    inset: 0;
+    z-index: -1;
   }
   &:is(:hover, :active) {
   &::after {
-      transform: scaleX(100%);
+    transform: scaleX(100%);
   }
   }
 }

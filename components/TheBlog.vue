@@ -20,7 +20,6 @@
       <PagePagination
         v-if="!searchImages"
         :pagination-page="paginationPage"
-        :refresh="refresh"
         @send-page-number="paginationPage = $event"
       />
     </div>
@@ -29,6 +28,7 @@
 
 <script setup lang="ts">
 import { ImagesData } from '@/typeScriptTypes/types'
+
 const quantityOfImages = ref<number>(13)
 //
 // Handle Pagination + Fetch Data

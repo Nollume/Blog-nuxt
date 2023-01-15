@@ -9,7 +9,7 @@
     </header>
     <slot />
     <footer>
-      <IconsArrowToTop class="arrow-to-top" @click="goToTop" />
+      <IconsArrowToTop class="arrow-to-top" @click="goToTop(0)" />
       <p>&copy; 2022</p>
     </footer>
   </div>
@@ -23,9 +23,7 @@ const router = useRouter()
 const redirectHome = () : void => {
   router.push('/')
 }
-
-const goToTop = () : void => { window.scrollTo({ top: 0, behavior: 'smooth' }) }
-
+const { goToTop } = useToTop()
 </script>
 
 <style scoped lang="scss">
@@ -89,10 +87,10 @@ footer {
       padding-block: 0.5rem;
   }
   .menu-icon {
-      display: inline-block;
-      cursor: pointer;
+    display: inline-block;
+    cursor: pointer;
 
-      padding-right: clamp(1rem, 2.5vw, 3rem);
+    padding-right: clamp(1rem, 2.5vw, 3rem);
   }
 }
 </style>

@@ -42,9 +42,6 @@
   </article>
 </template>
 
-<script setup lang="ts">
-</script>
-
 <style lang="scss">
 .title-wrapper {
   @extend %title;
